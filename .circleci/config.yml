@@ -24,7 +24,11 @@ jobs:
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  build: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
-    jobs:
-      - build
+  workflow:
+    # Skips Aviator's mq-tmp branches used for rebasing in parallel-merge mode.
+    # More info on aviator_branch_tmp.
+    when:
+      not:
+        <<: *aviator_branch_tmp
+  jobs:
+    - build
